@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe180cd47ae1fc4386938c7b45ebe41, type: 3}
+  m_Name: AllBiomeData
+  m_EditorClassIdentifier: 
+  BiomeList:
+  - name: BiomeGenerator
+    biome: 0
+    increment: 0.02
+    heightDifference: 3
+    color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
+  - name: Plains
+    biome: 1
+    increment: 0.04
+    heightDifference: 6
+    color: {r: 0, g: 0.3584906, b: 0.074979186, a: 1}
+  - name: Mountains
+    biome: 2
+    increment: 0.03
+    heightDifference: 15
+    color: {r: 0.5754717, g: 0.32172436, b: 0, a: 1}
+  - name: Wastekabd
+    biome: 3
+    increment: 0.2
+    heightDifference: 8
+    color: {r: 0.4433962, g: 0, b: 0, a: 1}
