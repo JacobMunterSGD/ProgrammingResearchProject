@@ -301,11 +301,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 4198926542837996211, guid: 632400a126be82a47b8b94def73d75bd, type: 3}
-  mapWidth: 100
-  mapLength: 100
+  mapWidth: 2
+  mapLength: 2
   increment: 0.2
   heightDifference: 10
   cubes: []
+  cubeLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   biomeData: {fileID: 11400000, guid: abec23ab822974d4fb9788e315bb4278, type: 2}
   biomeGenerationData:
     name: BiomeGenerator
