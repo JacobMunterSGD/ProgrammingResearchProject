@@ -28,7 +28,7 @@ public class BiomeData
         set { increment = value; }
     }
 
-    [SerializeField][Range(0, 50)] private int heightDifference;
+    [SerializeField][Range(-20, 50)] private int heightDifference;
     public int HeightDifference
     {
         get { return heightDifference; }
@@ -49,5 +49,7 @@ public enum Biomes
     noBiome,
     plains,
     mountains,
-    wasteland
+    wasteland,
+    ocean,
+    forest
 }

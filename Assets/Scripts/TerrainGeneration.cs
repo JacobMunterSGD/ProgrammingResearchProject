@@ -41,7 +41,9 @@ public class TerrainGeneration : MonoBehaviour
 
 		cubes = CreateCubes();
 
-        // NESTED FUNCTIONS FROM HERE
+        cubes = CreateVerticalCubes(cubes);
+
+		// NESTED FUNCTIONS FROM HERE
 
 		void ClearCurrentCubes()
 		{
@@ -112,6 +114,18 @@ public class TerrainGeneration : MonoBehaviour
             return tempCubes;
         }
 
+		List<CubeInfo> CreateVerticalCubes(List<CubeInfo> _cubes)
+        {
+            List<CubeInfo> _verticalCubes = new();
+
+            foreach(CubeInfo cube in _cubes)
+            {
+
+            }
+
+            return _verticalCubes;
+        }
+
         Biomes GetBiome(Vector2 pos)
 		{
 
@@ -138,11 +152,5 @@ public class TerrainGeneration : MonoBehaviour
 			GenerateCubes();
 		}
 	}
-
-    [ContextMenu("Generate Cubes")]
-    public void GenerateCubesRandomly()
-    {
-        GenerateCubes();
-    }
 
 }
