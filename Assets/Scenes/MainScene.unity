@@ -307,6 +307,12 @@ MonoBehaviour:
   heightDifference: 10
   cubes: []
   biomeData: {fileID: 11400000, guid: abec23ab822974d4fb9788e315bb4278, type: 2}
+  biomeGenerationData:
+    name: BiomeGenerator
+    biome: 0
+    increment: 0.02
+    heightDifference: 3
+    color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
 --- !u!1 &1465470355
 GameObject:
   m_ObjectHideFlags: 0

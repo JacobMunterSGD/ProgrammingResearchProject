@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 // This script makes the terrain
-public class BasicTerrainGeneration : MonoBehaviour
+public class TerrainGeneration : MonoBehaviour
 {
 
 	public GameObject cubePrefab;
@@ -22,22 +22,13 @@ public class BasicTerrainGeneration : MonoBehaviour
 
     [Header("BiomeData")]
     public AllBiomeData biomeData;
+	[SerializeField] BiomeData biomeGenerationData;
 
-    private float biomeGenerationIncrement;
     private int amountOfBiomes;
 
 	private void Start()
 	{
-        amountOfBiomes = biomeData.BiomeList.Count - 1;
-
-        foreach(BiomeData _biomeData in biomeData.BiomeList)
-        {
-            if (_biomeData.Biome == Biomes.noBiome)
-            {
-                biomeGenerationIncrement = _biomeData.Increment;
-                break;
-			}
-        }
+        amountOfBiomes = biomeData.BiomeList.Count;
 
 		GenerateCubes();
 	}
@@ -124,11 +115,11 @@ public class BasicTerrainGeneration : MonoBehaviour
         Biomes GetBiome(Vector2 pos)
 		{
 
-            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + RandOffset.x) * biomeGenerationIncrement, (pos.y + RandOffset.y) * biomeGenerationIncrement) * amountOfBiomes);
+            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + RandOffset.x) * biomeGenerationData.Increment, (pos.y + RandOffset.y) * biomeGenerationData.Increment) * amountOfBiomes);
 
             foreach (BiomeData _biomeData in biomeData.BiomeList)
             {
-                if (biomeData.BiomeList[biomeIndex + 1] == _biomeData)
+                if (biomeData.BiomeList[biomeIndex] == _biomeData)
                 {
                     return _biomeData.Biome;
 				}
