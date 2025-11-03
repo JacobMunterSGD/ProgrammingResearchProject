@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 4198926542837996211, guid: 632400a126be82a47b8b94def73d75bd, type: 3}
-  mapWidth: 2
-  mapLength: 2
+  mapWidth: 30
+  mapLength: 30
   increment: 0.2
   heightDifference: 10
   cubes: []
@@ -310,12 +310,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   biomeData: {fileID: 11400000, guid: abec23ab822974d4fb9788e315bb4278, type: 2}
-  biomeGenerationData:
-    name: BiomeGenerator
+  biomeGenerationSpecification:
+    name: 
+    biome: 0
+    increment: 0.03
+    heightDifference: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+  subBiomeData: {fileID: 11400000, guid: cabaff51b8d5efe42a9dc22a1b759fba, type: 2}
+  subBiomeGenerationSpecification:
+    name: 
     biome: 0
     increment: 0.02
-    heightDifference: 3
-    color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
+    heightDifference: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1465470355
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,9 +24,13 @@ public class TerrainGeneration : MonoBehaviour
 
     [Header("BiomeData")]
     public AllBiomeData biomeData;
-	[SerializeField] BiomeData biomeGenerationData;
+	[SerializeField] BiomeData biomeGenerationSpecification;
 
-    private int amountOfBiomes;
+    [Header("Sub Biome Data")]
+    public AllSubBiomeData subBiomeData;
+	[SerializeField] BiomeData subBiomeGenerationSpecification;
+
+	private int amountOfBiomes;
 
 	private void Start()
 	{
@@ -41,7 +45,7 @@ public class TerrainGeneration : MonoBehaviour
 
 		Vector2 RandOffset = GetRandomOffset();
 
-		cubes = CreateCubes();
+		cubes = CreateHorizontalCubes();
 
         cubes = CreateVerticalCubes(cubes);
 
@@ -67,7 +71,7 @@ public class TerrainGeneration : MonoBehaviour
 			return new Vector2(xRandOffset, yRandOffset);
         }
 
-        List<CubeInfo> CreateCubes()
+        List<CubeInfo> CreateHorizontalCubes()
         {
             List<CubeInfo> tempCubes = new();
 
@@ -76,7 +80,7 @@ public class TerrainGeneration : MonoBehaviour
                 for (int _length = 0; _length < mapLength; _length++)
                 {
 
-                    //new Vector3(_width + RandOffset.x, _length + RandOffset.y, 0);
+                    // GET BIOME INFO
 
                     Biomes _tempBiome = GetBiome(new Vector2(_length, _width));
 
@@ -95,19 +99,27 @@ public class TerrainGeneration : MonoBehaviour
 						}
                     }
 
-                    int height = (int)(Mathf.PerlinNoise((_width + RandOffset.x) * _tempIncrement, (_length + RandOffset.y) * _tempIncrement) * _tempHeightDifference);
+					// ADD SUBBIOME
+
+					SubBiomeData _tempSubBiome = GetSubBiome(new Vector2(_length, _width));
+
+                    int heightAddition = _tempSubBiome.HeightChange;
+                    Vector3 colorDifference = _tempSubBiome.ColorDifference / 255;
+
+
+
+					int height = (int)(Mathf.PerlinNoise((_width + RandOffset.x) * _tempIncrement, (_length + RandOffset.y) * _tempIncrement) * _tempHeightDifference) + heightAddition;
 
                     Vector3 position = new Vector3(_width, height, _length);
 
 					GameObject _cube = Instantiate(cubePrefab, position, Quaternion.identity);
 
+                    _tempColor = new Color(_tempColor.r + colorDifference.x, _tempColor.g + colorDifference.y, _tempColor.b + colorDifference.z);
+
                     CubeInfo newCubeInfo = new(_cube, position, _tempColor, _tempBiome);
 					_cube.AddComponent<CubeInfoGameobject>().cubeInfo = newCubeInfo;
 
 					tempCubes.Add(newCubeInfo);
-
-					//float _colorMultiplier = 1 / (float)heightDifference;
-					//mr.material.color = new Color(height * _colorMultiplier, height * _colorMultiplier, height * _colorMultiplier);
 				}
 			}
 
@@ -143,7 +155,7 @@ public class TerrainGeneration : MonoBehaviour
 
                     if (distanceToNextCube > cubesToAdd && !(hit.point == Vector3.zero))
                     {
-						print(i + " " + distanceToNextCube + " " + hit.point);
+						//print(i + " " + distanceToNextCube + " " + hit.point);
 
 						cubesToAdd = distanceToNextCube;
                         //print(hit.point + " " + cubesToAdd);
@@ -160,7 +172,7 @@ public class TerrainGeneration : MonoBehaviour
 			for (int i = 0; i < _cubes.Count; i++)
             {
 
-                print(i + " " + cubesToAddList[i]);
+                //print(i + " " + cubesToAddList[i]);
 
 				CubeInfo cube = _cubes[i];
 
@@ -188,7 +200,7 @@ public class TerrainGeneration : MonoBehaviour
         Biomes GetBiome(Vector2 pos)
 		{
 
-            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + RandOffset.x) * biomeGenerationData.Increment, (pos.y + RandOffset.y) * biomeGenerationData.Increment) * amountOfBiomes);
+            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + RandOffset.x) * biomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * biomeGenerationSpecification.Increment) * amountOfBiomes);
 
             foreach (BiomeData _biomeData in biomeData.BiomeList)
             {
@@ -200,6 +212,35 @@ public class TerrainGeneration : MonoBehaviour
 
             print("something's not working if we're here");
             return Biomes.plains;
+        }
+
+		SubBiomeData GetSubBiome(Vector2 pos)
+        {
+            SubBiomeData _tempSubBiomeData = subBiomeData.SubBiomeList[0];
+
+			// algorithm that finds the subbiome based on its chance
+
+			float subBiomeIndex = (Mathf.PerlinNoise((pos.x + RandOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * subBiomeGenerationSpecification.Increment) * subBiomeData.SubBiomeList.Count);
+
+            //print(Mathf.PerlinNoise((pos.x + RandOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * subBiomeGenerationSpecification.Increment));
+
+            print((int)subBiomeIndex);
+
+            _tempSubBiomeData = subBiomeData.SubBiomeList[(int)subBiomeIndex];
+
+			switch (subBiomeIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+				case 2:
+					break;
+				case 3:
+					break;
+			}
+
+            return _tempSubBiomeData;
         }
 
         void ColourCubes()

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: AllSubBiomeData
+  m_EditorClassIdentifier: Assembly-CSharp::AllSubBiomeData
+  SubBiomeList:
+  - name: Hill
+    subBiome: 0
+    heightChange: 3
+    colorDifference: {x: -20, y: -20, z: -20}
+    chance: 10
+  - name: Trench
+    subBiome: 1
+    heightChange: -3
+    colorDifference: {x: 20, y: 20, z: 20}
+    chance: 10
+  - name: None
+    subBiome: 0
+    heightChange: 0
+    colorDifference: {x: 0, y: 0, z: 0}
+    chance: 75
+  - name: Spire
+    subBiome: 3
+    heightChange: 6
+    colorDifference: {x: -50, y: -50, z: -50}
+    chance: 5

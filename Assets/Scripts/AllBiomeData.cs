@@ -9,6 +9,12 @@ public class AllBiomeData : ScriptableObject
     public List<BiomeData> BiomeList;
 }
 
+[CreateAssetMenu(fileName = "AllSubBiomeData", menuName = "ScriptableObjects/AllSubBiomeDataScriptableObjects", order = 2)]
+public class AllSubBiomeData : ScriptableObject
+{
+	public List<SubBiomeData> SubBiomeList;
+}
+
 [Serializable]
 public class BiomeData
 {
@@ -44,6 +50,41 @@ public class BiomeData
 
 }
 
+[Serializable]
+public class SubBiomeData
+{
+	[SerializeField] string name;
+
+	[SerializeField] private SubBiomes subBiome;
+	public SubBiomes SubBiome
+	{
+		set { subBiome = value; }
+		get { return subBiome; }
+	}
+
+	[SerializeField][Range(-10, 10)] private int heightChange;
+	public int HeightChange
+	{
+		get { return heightChange; }
+		set { heightChange = value; }
+	}
+
+	[SerializeField] Vector3 colorDifference;
+	public Vector3 ColorDifference
+	{
+		get { return colorDifference; }
+		set { colorDifference = value; }
+	}
+
+	[SerializeField] float chance;
+	public float Chance
+	{
+		get { return chance; }
+		set { chance = value; }
+	}
+
+}
+
 public enum Biomes
 {
     noBiome,
@@ -52,4 +93,12 @@ public enum Biomes
     wasteland,
     ocean,
     forest
+}
+
+public enum SubBiomes
+{
+	none,
+    hill,
+    trench,
+    spire
 }
