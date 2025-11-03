@@ -76,13 +76,6 @@ public class SubBiomeData
 		set { colorDifference = value; }
 	}
 
-	[SerializeField] float chance;
-	public float Chance
-	{
-		get { return chance; }
-		set { chance = value; }
-	}
-
 }
 
 public enum Biomes

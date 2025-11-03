@@ -107,7 +107,6 @@ public class TerrainGeneration : MonoBehaviour
                     Vector3 colorDifference = _tempSubBiome.ColorDifference / 255;
 
 
-
 					int height = (int)(Mathf.PerlinNoise((_width + RandOffset.x) * _tempIncrement, (_length + RandOffset.y) * _tempIncrement) * _tempHeightDifference) + heightAddition;
 
                     Vector3 position = new Vector3(_width, height, _length);
@@ -216,29 +215,9 @@ public class TerrainGeneration : MonoBehaviour
 
 		SubBiomeData GetSubBiome(Vector2 pos)
         {
-            SubBiomeData _tempSubBiomeData = subBiomeData.SubBiomeList[0];
-
-			// algorithm that finds the subbiome based on its chance
-
 			float subBiomeIndex = (Mathf.PerlinNoise((pos.x + RandOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * subBiomeGenerationSpecification.Increment) * subBiomeData.SubBiomeList.Count);
 
-            //print(Mathf.PerlinNoise((pos.x + RandOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * subBiomeGenerationSpecification.Increment));
-
-            print((int)subBiomeIndex);
-
-            _tempSubBiomeData = subBiomeData.SubBiomeList[(int)subBiomeIndex];
-
-			switch (subBiomeIndex)
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-				case 2:
-					break;
-				case 3:
-					break;
-			}
+			SubBiomeData _tempSubBiomeData = subBiomeData.SubBiomeList[(int)subBiomeIndex];
 
             return _tempSubBiomeData;
         }
