@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: AllBiomeData
   m_EditorClassIdentifier: 
   BiomeList:
-  - name: Plains
-    biome: 1
-    increment: 0.04
-    heightDifference: 6
-    color: {r: 0, g: 0.3584906, b: 0.074979186, a: 1}
-  - name: Mountains
-    biome: 2
-    increment: 0.03
-    heightDifference: 15
-    color: {r: 0.5754717, g: 0.32172436, b: 0, a: 1}
   - name: Wasteland
     biome: 3
     increment: 0.2
     heightDifference: 8
     color: {r: 0.4433962, g: 0, b: 0, a: 1}
+  - name: Mountains
+    biome: 2
+    increment: 0.03
+    heightDifference: 15
+    color: {r: 0.5754717, g: 0.32172436, b: 0, a: 1}
+  - name: Plains
+    biome: 1
+    increment: 0.04
+    heightDifference: 6
+    color: {r: 0, g: 0.3584906, b: 0.074979186, a: 1}
   - name: Ocean
     biome: 4
     increment: 0.01
