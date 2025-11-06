@@ -21,6 +21,7 @@ public class ChunkLoader : MonoBehaviour
 	{
 		chunkWidth = terGenScript.MapWidth;
 		chunkLength = terGenScript.MapLength;
+		chunkPosSignifer.position = currentChunkOffset + signifierOffset + new Vector3(chunkWidth / 2, 0, chunkLength / 2);
 	}
 
 	void Update()
