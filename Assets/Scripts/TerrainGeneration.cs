@@ -9,10 +9,22 @@ public class TerrainGeneration : MonoBehaviour
 
 	public GameObject cubePrefab;
 
+    Vector2 perlinNoiseOffset = new();
+
     [Header("Grid")]
 
     [SerializeField] int mapWidth;
+	public int MapWidth
+	{
+		set { mapWidth = value; }
+		get { return mapWidth; }
+	}
 	[SerializeField] int mapLength;
+	public int MapLength
+	{
+		set { mapLength = value; }
+		get { return mapLength; }
+	}
 
 	[SerializeField][Range(0, .2f)] float increment;
 
@@ -39,17 +51,23 @@ public class TerrainGeneration : MonoBehaviour
 		//GenerateCubes();
 	}
 
-	void GenerateCubes()
+	public void GenerateCubes(bool startingOver, Vector3 chunkOffset)
 	{
-		ClearCurrentCubes();
+        List<CubeInfo> generatedCubes = new();
 
-		Vector2 RandOffset = GetRandomOffset();
+        if (startingOver)
+        {
+			ClearCurrentCubes();
+			perlinNoiseOffset = GetRandomOffset();
+		}
 
-		cubes = CreateHorizontalCubes();
+		generatedCubes = CreateHorizontalCubes();
 
-        cubes = CreateVerticalCubes(cubes);
+		generatedCubes = CreateVerticalCubes(generatedCubes);
 
         ColourCubes();
+
+        AddGeneratedCubesToMainList();
 
 		// NESTED FUNCTIONS FROM HERE
 
@@ -61,6 +79,11 @@ public class TerrainGeneration : MonoBehaviour
             }
 
             cubes.Clear();
+        }
+
+        void AddGeneratedCubesToMainList()
+        {
+            cubes.AddRange(generatedCubes);
         }
 
 		Vector2 GetRandomOffset()
@@ -75,9 +98,9 @@ public class TerrainGeneration : MonoBehaviour
         {
             List<CubeInfo> tempCubes = new();
 
-            for (int _width = 0; _width < mapWidth; _width++)
+            for (int _width = (int)chunkOffset.x; _width < (int)chunkOffset.x + mapWidth; _width++)
             {
-                for (int _length = 0; _length < mapLength; _length++)
+                for (int _length = (int)chunkOffset.z; _length < (int)chunkOffset.z + mapLength; _length++)
                 {
 
                     // GET BIOME INFO
@@ -107,7 +130,7 @@ public class TerrainGeneration : MonoBehaviour
                     Vector3 colorDifference = _tempSubBiome.ColorDifference / 255;
 
 
-					int height = (int)(Mathf.PerlinNoise((_width + RandOffset.x) * _tempIncrement, (_length + RandOffset.y) * _tempIncrement) * _tempHeightDifference) + heightAddition;
+					int height = (int)(Mathf.PerlinNoise((_width + perlinNoiseOffset.x) * _tempIncrement, (_length + perlinNoiseOffset.y) * _tempIncrement) * _tempHeightDifference) + heightAddition;
 
                     Vector3 position = new Vector3(_width, height, _length);
 
@@ -199,7 +222,7 @@ public class TerrainGeneration : MonoBehaviour
         Biomes GetBiome(Vector2 pos)
 		{
 
-            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + RandOffset.x) * biomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * biomeGenerationSpecification.Increment) * amountOfBiomes);
+            int biomeIndex = (int)(Mathf.PerlinNoise((pos.x + perlinNoiseOffset.x) * biomeGenerationSpecification.Increment, (pos.y + perlinNoiseOffset.y) * biomeGenerationSpecification.Increment) * amountOfBiomes);
 
             foreach (BiomeData _biomeData in biomeData.BiomeList)
             {
@@ -215,7 +238,7 @@ public class TerrainGeneration : MonoBehaviour
 
 		SubBiomeData GetSubBiome(Vector2 pos)
         {
-			float subBiomeIndex = (Mathf.PerlinNoise((pos.x + RandOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + RandOffset.y) * subBiomeGenerationSpecification.Increment) * subBiomeData.SubBiomeList.Count);
+			float subBiomeIndex = (Mathf.PerlinNoise((pos.x + perlinNoiseOffset.x) * subBiomeGenerationSpecification.Increment, (pos.y + perlinNoiseOffset.y) * subBiomeGenerationSpecification.Increment) * subBiomeData.SubBiomeList.Count);
 
 			SubBiomeData _tempSubBiomeData = subBiomeData.SubBiomeList[(int)subBiomeIndex];
 
@@ -224,7 +247,7 @@ public class TerrainGeneration : MonoBehaviour
 
         void ColourCubes()
         {
-            foreach(CubeInfo cube in cubes)
+            foreach(CubeInfo cube in generatedCubes)
             {
 				MeshRenderer mr = cube.CubeGameObject.GetComponent<MeshRenderer>();
 				mr.material.color = cube.Colour;
@@ -232,13 +255,5 @@ public class TerrainGeneration : MonoBehaviour
 		}
 
     }
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			GenerateCubes();
-		}
-	}
 
 }
