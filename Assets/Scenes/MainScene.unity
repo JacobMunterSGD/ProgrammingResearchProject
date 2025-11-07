@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &749629815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749629816}
+  - component: {fileID: 749629817}
+  m_Layer: 0
+  m_Name: CameraController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &749629816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749629815}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &749629817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749629815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3d3780941a9164082fcac685d02581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cineCam: {fileID: 1440931265}
+  zoomSpeed: 20
 --- !u!1 &939950429
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +438,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -408,6 +454,7 @@ GameObject:
   - component: {fileID: 1317161983}
   - component: {fileID: 1317161984}
   - component: {fileID: 1317161985}
+  - component: {fileID: 1317161986}
   m_Layer: 0
   m_Name: TerrainGeneration
   m_TagString: Untagged
@@ -443,8 +490,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 4198926542837996211, guid: 632400a126be82a47b8b94def73d75bd, type: 3}
-  mapWidth: 20
-  mapLength: 20
+  folGenScript: {fileID: 1317161986}
+  mapWidth: 10
+  mapLength: 10
   increment: 0.2
   heightDifference: 10
   cubes: []
@@ -481,6 +529,24 @@ MonoBehaviour:
   createdChunkPositions: []
   chunkPosSignifer: {fileID: 950487464}
   signifierOffset: {x: 0, y: 10, z: 0}
+--- !u!114 &1317161986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317161982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3ba1de9cd3b8e4c8c9f9c9ef8759b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grassPrefab: {fileID: 7394835754334536928, guid: 074cc04f71cb02f45b58d625abebb14c, type: 3}
+  grassSpacialIncrement: 0.2
+  grassChance: 5
+  grassColourIncrement: 0.1
+  grassColourNoiseMultiplier: 2
+  grassRandomColourRange: 0.3
 --- !u!1 &1440931262
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,3 +882,4 @@ SceneRoots:
   - {fileID: 1465470358}
   - {fileID: 950487464}
   - {fileID: 1440931266}
+  - {fileID: 749629816}

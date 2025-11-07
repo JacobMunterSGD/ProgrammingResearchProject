@@ -32,6 +32,8 @@ public class ChunkLoader : MonoBehaviour
 			currentChunkOffset = Vector3.zero;
 			createdChunkPositions.Add(currentChunkOffset);
 			terGenScript.GenerateCubes(true, currentChunkOffset);
+
+			chunkPosSignifer.position = currentChunkOffset + signifierOffset + new Vector3(chunkWidth / 2, 0, chunkLength / 2);
 		}
 
 		if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -74,4 +76,5 @@ public class ChunkLoader : MonoBehaviour
 
 
 	}
+
 }

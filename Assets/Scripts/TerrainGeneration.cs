@@ -11,6 +11,8 @@ public class TerrainGeneration : MonoBehaviour
 
     Vector2 perlinNoiseOffset = new();
 
+    [SerializeField] FoliageGeneration folGenScript;
+
     [Header("Grid")]
 
     [SerializeField] int mapWidth;
@@ -66,6 +68,8 @@ public class TerrainGeneration : MonoBehaviour
 		generatedCubes = CreateVerticalCubes(generatedCubes);
 
         ColourCubes();
+
+		generatedCubes.AddRange(folGenScript.MakeFoliage(generatedCubes, perlinNoiseOffset));
 
         AddGeneratedCubesToMainList();
 
