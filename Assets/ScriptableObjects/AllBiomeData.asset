@@ -18,23 +18,33 @@ MonoBehaviour:
     increment: 0.2
     heightDifference: 8
     color: {r: 0.4433962, g: 0, b: 0, a: 1}
+    containsFoliage: 0
+    foliageTypes: 
   - name: Mountains
     biome: 2
     increment: 0.03
     heightDifference: 15
     color: {r: 0.5754717, g: 0.32172436, b: 0, a: 1}
+    containsFoliage: 1
+    foliageTypes: 0200000001000000
   - name: Plains
     biome: 1
     increment: 0.04
     heightDifference: 6
     color: {r: 0, g: 0.3584906, b: 0.074979186, a: 1}
+    containsFoliage: 1
+    foliageTypes: 000000000100000002000000
   - name: Ocean
     biome: 4
     increment: 0.01
     heightDifference: -10
     color: {r: 0, g: 0.1648099, b: 0.6037736, a: 1}
+    containsFoliage: 0
+    foliageTypes: 
   - name: Forest
     biome: 5
     increment: 0.02
     heightDifference: 3
     color: {r: 0.3679245, g: 0.2282093, b: 0.16834283, a: 1}
+    containsFoliage: 1
+    foliageTypes: 00000000

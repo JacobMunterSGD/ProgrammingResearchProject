@@ -48,6 +48,12 @@ public class BiomeData
 		set { color = value; }
 	}
 
+    [SerializeField] bool containsFoliage;
+    public bool ContainsFoliage => containsFoliage;
+
+    [SerializeField] List<FoliageTypes> foliageTypes;
+    public List<FoliageTypes> FoliageTypes => foliageTypes;
+
 }
 
 [Serializable]
@@ -94,4 +100,11 @@ public enum SubBiomes
     hill,
     trench,
     spire
+}
+
+public enum FoliageTypes
+{
+    grass,
+    flower,
+    bush
 }

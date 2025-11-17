@@ -26,6 +26,13 @@ public class ChunkLoader : MonoBehaviour
 
 	void Update()
     {
+
+		PlayerInput();
+
+	}
+
+	void PlayerInput()
+	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			createdChunkPositions.Clear();
@@ -37,8 +44,8 @@ public class ChunkLoader : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-			CreateNewChunkAtPoint(new Vector3(chunkWidth, 0, 0));			
+		{
+			CreateNewChunkAtPoint(new Vector3(chunkWidth, 0, 0));
 		}
 		if (Input.GetKeyDown(KeyCode.LeftArrow))
 		{

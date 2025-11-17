@@ -5,50 +5,92 @@ using UnityEngine.UIElements;
 
 public class FoliageGeneration : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] AllBiomeData biomeData;
+
+    [Header("General Parameters")]
+	[SerializeField] float foliageSpacialIncrement;
+
+    [Header("Prefabs")]
+	[SerializeField] GameObject grassPrefab;
+	[SerializeField] GameObject flowerPrefab;
+	[SerializeField] GameObject bushPrefab;
+
+	[Tooltip("The higher this number, the less foliage will spawn")]
+	[SerializeField] float spawnChanceModifier;
+	[SerializeField] float numberOfPrefabs;
 
 	[Header("Grass")]
-
-	[SerializeField] GameObject grassPrefab;
-
-	[SerializeField] float grassSpacialIncrement;
-    [Tooltip("The higher this number, the less grass will spawn")]
-    [SerializeField] float grassChance;
-
 	[SerializeField] float grassColourIncrement;
 	[SerializeField] float grassColourNoiseMultiplier;
     [SerializeField] float grassRandomColourRange;
 
-	public List<CubeInfo> MakeFoliage(List<CubeInfo> currentCubes, Vector2 perlinOffset)
+    public List<CubeInfo> MakeFoliage(List<CubeInfo> currentCubes, Vector2 perlinOffset)
     {
-        List<CubeInfo> grassList = new();
+        List<CubeInfo> foliageList = new();
 
-        foreach(CubeInfo cube in currentCubes)
+        foreach (CubeInfo cube in currentCubes)
         {
-            if (cube.Biome == Biomes.plains)
-            {
-                if (!IsGrassHere(cube.Position)) continue;
+            if (!DoesBiomeContainFoliage(cube.Biome)) continue;
 
-                GameObject _tempGrass = Instantiate(grassPrefab, cube.CubeGameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+			GameObject _tempGrass = Instantiate(GetFoliagePrefab(cube.Position, cube.Biome), cube.CubeGameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
 
-				ColourBladesOfGrass(_tempGrass);
+            ColourFoliageOfGrass(_tempGrass);
 
-				Color _color = Color.green;
+            Color _color = Color.green;
 
-				grassList.Add(new CubeInfo(_tempGrass.gameObject, _tempGrass.gameObject.transform.position, _color, cube.Biome));
-
-
-			}
-		}
-
-        bool IsGrassHere(Vector3 position)
-		{
-			int grassIndex = (int)(Mathf.PerlinNoise((position.x + perlinOffset.x) * grassSpacialIncrement * grassChance, (position.z + perlinOffset.y) * grassSpacialIncrement) * grassChance);
-
-            if (grassIndex == 1) return true;
-            else return false;
+            foliageList.Add(new CubeInfo(_tempGrass, _tempGrass.transform.position, _color, cube.Biome));
+            
         }
 
-        void ColourBladesOfGrass(GameObject cubeGO)
+		return foliageList;
+
+        // NESTED FUNCTIONS
+
+        GameObject GetFoliagePrefab(Vector3 position, Biomes biome)
+        {
+			int index = (int)(Mathf.PerlinNoise(
+                (position.x + perlinOffset.x) * foliageSpacialIncrement, (position.z + perlinOffset.y) * foliageSpacialIncrement)
+                * (numberOfPrefabs + spawnChanceModifier));
+
+            BiomeData currentBiome = GetBiomeDataFromBiome(biome);
+
+			switch (index)
+            {
+                case 3:
+                    if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.grass)) return new();
+                    return grassPrefab;
+                case 4:
+					if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.flower)) return new();
+					return flowerPrefab;
+                case 5:
+					if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.bush)) return new();
+					return bushPrefab;
+
+                default:
+					return new();
+
+			}
+
+            bool CheckIfBiomeHasFoliage(BiomeData biomeData, FoliageTypes folType)
+            {
+                bool containsThisFoliage = false;
+
+                foreach (FoliageTypes _folType in biomeData.FoliageTypes)
+                {
+                    if (_folType == folType)
+                    {
+                        containsThisFoliage = true;
+                        break;
+					}
+                }
+
+                return containsThisFoliage;
+			}
+			
+		}
+
+        void ColourFoliageOfGrass(GameObject cubeGO)
         {
             Vector3 position = cubeGO.transform.position;
 
@@ -59,7 +101,7 @@ public class FoliageGeneration : MonoBehaviour
                 {
                     float colourMultiplier = Mathf.PerlinNoise((position.x + perlinOffset.x) * grassColourIncrement, (position.z + perlinOffset.y) * grassColourIncrement) * grassColourNoiseMultiplier;
 
-                    float ranColourMulitplier = Random.Range(0, grassRandomColourRange) - grassRandomColourRange/2;
+                    float ranColourMulitplier = Random.Range(0, grassRandomColourRange) - grassRandomColourRange / 2;
 
                     Color startColour = _mr.material.color;
 
@@ -70,7 +112,21 @@ public class FoliageGeneration : MonoBehaviour
             }
         }
 
-		return grassList;
+        bool DoesBiomeContainFoliage(Biomes _currentBiome)
+        {
+            BiomeData _currentBiomeData = GetBiomeDataFromBiome(_currentBiome);
+            return _currentBiomeData.ContainsFoliage;
+		}
+
+        BiomeData GetBiomeDataFromBiome(Biomes _wantedBiome)
+        {
+            foreach(BiomeData _biomeData in biomeData.BiomeList)
+            {
+                if (_biomeData.Biome == _wantedBiome) return _biomeData;
+			}
+
+            return biomeData.BiomeList[0];
+		}
     }
 
 }

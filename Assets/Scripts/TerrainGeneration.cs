@@ -133,7 +133,6 @@ public class TerrainGeneration : MonoBehaviour
                     int heightAddition = _tempSubBiome.HeightChange;
                     Vector3 colorDifference = _tempSubBiome.ColorDifference / 255;
 
-
 					int height = (int)(Mathf.PerlinNoise((_width + perlinNoiseOffset.x) * _tempIncrement, (_length + perlinNoiseOffset.y) * _tempIncrement) * _tempHeightDifference) + heightAddition;
 
                     Vector3 position = new Vector3(_width, height, _length);

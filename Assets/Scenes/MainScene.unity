@@ -506,6 +506,8 @@ MonoBehaviour:
     increment: 0.03
     heightDifference: 0
     color: {r: 0, g: 0, b: 0, a: 0}
+    containsFoliage: 0
+    foliageTypes: 
   subBiomeData: {fileID: 11400000, guid: cabaff51b8d5efe42a9dc22a1b759fba, type: 2}
   subBiomeGenerationSpecification:
     name: 
@@ -513,6 +515,8 @@ MonoBehaviour:
     increment: 0.02
     heightDifference: 0
     color: {r: 0, g: 0, b: 0, a: 0}
+    containsFoliage: 0
+    foliageTypes: 
 --- !u!114 &1317161985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,9 +545,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3ba1de9cd3b8e4c8c9f9c9ef8759b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  biomeData: {fileID: 11400000, guid: abec23ab822974d4fb9788e315bb4278, type: 2}
+  foliageSpacialIncrement: 0.3
   grassPrefab: {fileID: 7394835754334536928, guid: 074cc04f71cb02f45b58d625abebb14c, type: 3}
-  grassSpacialIncrement: 0.2
-  grassChance: 5
+  flowerPrefab: {fileID: 7394835754334536928, guid: bb2d4e06761cf9d4b83091e8041a4957, type: 3}
+  bushPrefab: {fileID: 7394835754334536928, guid: 3ea910763329a0c4698544e263d20d8f, type: 3}
+  spawnChanceModifier: 4
+  numberOfPrefabs: 2
   grassColourIncrement: 0.1
   grassColourNoiseMultiplier: 2
   grassRandomColourRange: 0.3
