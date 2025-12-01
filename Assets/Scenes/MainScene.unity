@@ -491,8 +491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 4198926542837996211, guid: 632400a126be82a47b8b94def73d75bd, type: 3}
   folGenScript: {fileID: 1317161986}
-  mapWidth: 20
-  mapLength: 20
+  mapWidth: 10
+  mapLength: 10
   increment: 0.2
   heightDifference: 10
   cubes: []
