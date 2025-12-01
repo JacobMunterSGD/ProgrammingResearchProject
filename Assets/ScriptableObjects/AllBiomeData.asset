@@ -33,7 +33,7 @@ MonoBehaviour:
     heightDifference: 6
     color: {r: 0, g: 0.3584906, b: 0.074979186, a: 1}
     containsFoliage: 1
-    foliageTypes: 000000000100000002000000
+    foliageTypes: 04000000010000000200000003000000
   - name: Ocean
     biome: 4
     increment: 0.01

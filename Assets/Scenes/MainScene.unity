@@ -491,8 +491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 4198926542837996211, guid: 632400a126be82a47b8b94def73d75bd, type: 3}
   folGenScript: {fileID: 1317161986}
-  mapWidth: 10
-  mapLength: 10
+  mapWidth: 20
+  mapLength: 20
   increment: 0.2
   heightDifference: 10
   cubes: []
@@ -546,12 +546,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomeData: {fileID: 11400000, guid: abec23ab822974d4fb9788e315bb4278, type: 2}
-  foliageSpacialIncrement: 0.3
+  foliageSpacialIncrement: 0.2
   grassPrefab: {fileID: 7394835754334536928, guid: 074cc04f71cb02f45b58d625abebb14c, type: 3}
   flowerPrefab: {fileID: 7394835754334536928, guid: bb2d4e06761cf9d4b83091e8041a4957, type: 3}
   bushPrefab: {fileID: 7394835754334536928, guid: 3ea910763329a0c4698544e263d20d8f, type: 3}
-  spawnChanceModifier: 4
-  numberOfPrefabs: 2
+  house1Prefab: {fileID: 7394835754334536928, guid: 0c1e67fab30ef824e9055daaec74ddf2, type: 3}
+  spawnChanceModifier: 8
+  numberOfPrefabs: 3
   grassColourIncrement: 0.1
   grassColourNoiseMultiplier: 2
   grassRandomColourRange: 0.3

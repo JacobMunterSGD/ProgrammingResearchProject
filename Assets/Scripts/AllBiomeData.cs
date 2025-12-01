@@ -104,7 +104,9 @@ public enum SubBiomes
 
 public enum FoliageTypes
 {
+    none,
     grass,
     flower,
-    bush
+    bush,
+    house
 }

@@ -15,6 +15,7 @@ public class FoliageGeneration : MonoBehaviour
 	[SerializeField] GameObject grassPrefab;
 	[SerializeField] GameObject flowerPrefab;
 	[SerializeField] GameObject bushPrefab;
+	[SerializeField] GameObject house1Prefab;
 
 	[Tooltip("The higher this number, the less foliage will spawn")]
 	[SerializeField] float spawnChanceModifier;
@@ -29,17 +30,26 @@ public class FoliageGeneration : MonoBehaviour
     {
         List<CubeInfo> foliageList = new();
 
+        print(currentCubes.Count);
+
         foreach (CubeInfo cube in currentCubes)
         {
             if (!DoesBiomeContainFoliage(cube.Biome)) continue;
 
-			GameObject _tempGrass = Instantiate(GetFoliagePrefab(cube.Position, cube.Biome), cube.CubeGameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            FoliageTypes folType = FoliageTypes.none;
 
-            ColourFoliageOfGrass(_tempGrass);
+			GameObject _foliageGO = Instantiate(GetFoliagePrefab(cube.Position, cube.Biome, out folType), cube.CubeGameObject.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+          
+            if (folType == FoliageTypes.house)
+            {
+                RandomizeHouseRotation(_foliageGO);
+			}
+            else
+            {
+				RandomizeColour(_foliageGO);
+			}
 
-            Color _color = Color.green;
-
-            foliageList.Add(new CubeInfo(_tempGrass, _tempGrass.transform.position, _color, cube.Biome));
+            foliageList.Add(new CubeInfo(_foliageGO, _foliageGO.transform.position, new(), cube.Biome));
             
         }
 
@@ -47,7 +57,7 @@ public class FoliageGeneration : MonoBehaviour
 
         // NESTED FUNCTIONS
 
-        GameObject GetFoliagePrefab(Vector3 position, Biomes biome)
+        GameObject GetFoliagePrefab(Vector3 position, Biomes biome, out FoliageTypes foliageType)
         {
 			int index = (int)(Mathf.PerlinNoise(
                 (position.x + perlinOffset.x) * foliageSpacialIncrement, (position.z + perlinOffset.y) * foliageSpacialIncrement)
@@ -55,17 +65,27 @@ public class FoliageGeneration : MonoBehaviour
 
             BiomeData currentBiome = GetBiomeDataFromBiome(biome);
 
+			foliageType = FoliageTypes.none;
+
 			switch (index)
             {
-                case 3:
+                case 2:
                     if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.grass)) return new();
-                    return grassPrefab;
-                case 4:
+                    foliageType = FoliageTypes.grass;
+					return grassPrefab;
+                case 3:
 					if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.flower)) return new();
+					foliageType = FoliageTypes.flower;
 					return flowerPrefab;
-                case 5:
+                case 8:
 					if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.bush)) return new();
+					foliageType = FoliageTypes.bush;
 					return bushPrefab;
+                case 9:
+                    if (Random.Range(0, 4) != 1) return new();
+					if (!CheckIfBiomeHasFoliage(currentBiome, FoliageTypes.house)) return new();
+                    foliageType = FoliageTypes.house;
+					return house1Prefab;
 
                 default:
 					return new();
@@ -90,7 +110,7 @@ public class FoliageGeneration : MonoBehaviour
 			
 		}
 
-        void ColourFoliageOfGrass(GameObject cubeGO)
+        void RandomizeColour(GameObject cubeGO)
         {
             Vector3 position = cubeGO.transform.position;
 
@@ -127,6 +147,27 @@ public class FoliageGeneration : MonoBehaviour
 
             return biomeData.BiomeList[0];
 		}
+
+        void RandomizeHouseRotation(GameObject houseGO)
+        {
+            int ran = Random.Range(1, 4);
+
+            switch (ran)
+            {
+                case 1:
+                    houseGO.transform.eulerAngles = new Vector3(0, 0, 0);
+                    break;
+				case 2:
+					houseGO.transform.eulerAngles = new Vector3(0, 90, 0);
+					break;
+				case 3:
+					houseGO.transform.eulerAngles = new Vector3(0, 180, 0);
+					break;
+				case 4:
+					houseGO.transform.eulerAngles = new Vector3(0, 270, 0);
+					break;
+			}
+        }
     }
 
 }

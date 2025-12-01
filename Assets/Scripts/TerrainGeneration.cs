@@ -63,15 +63,19 @@ public class TerrainGeneration : MonoBehaviour
 			perlinNoiseOffset = GetRandomOffset();
 		}
 
-		generatedCubes = CreateHorizontalCubes();
+		List<CubeInfo> horizontalCubes = CreateHorizontalCubes();
+		ColourCubes(horizontalCubes);
 
-		generatedCubes = CreateVerticalCubes(generatedCubes);
+		List<CubeInfo> foliageCubes = folGenScript.MakeFoliage(horizontalCubes, perlinNoiseOffset);
 
-        ColourCubes();
+		List<CubeInfo> verticalCubes = CreateVerticalCubes(horizontalCubes);
+		ColourCubes(verticalCubes);
 
-		generatedCubes.AddRange(folGenScript.MakeFoliage(generatedCubes, perlinNoiseOffset));
+		generatedCubes.AddRange(horizontalCubes);
+        generatedCubes.AddRange(verticalCubes);
+        generatedCubes.AddRange(foliageCubes);
 
-        AddGeneratedCubesToMainList();
+		AddGeneratedCubesToMainList();
 
 		// NESTED FUNCTIONS FROM HERE
 
@@ -248,12 +252,14 @@ public class TerrainGeneration : MonoBehaviour
             return _tempSubBiomeData;
         }
 
-        void ColourCubes()
+        void ColourCubes(List<CubeInfo> currentCubes)
         {
-            foreach(CubeInfo cube in generatedCubes)
+            foreach(CubeInfo cube in currentCubes)
             {
-				MeshRenderer mr = cube.CubeGameObject.GetComponent<MeshRenderer>();
-				mr.material.color = cube.Colour;
+                if (cube.CubeGameObject.TryGetComponent<MeshRenderer>(out MeshRenderer mr))
+                {
+					mr.material.color = cube.Colour;
+				}
 			}			
 		}
 
